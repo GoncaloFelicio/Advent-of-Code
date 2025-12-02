@@ -1,6 +1,6 @@
-=-=-=-=-=-=-=-=-=-=-=-=-=
-|| 🎅 Advent of Code 🎁 ||
-=-=-=-=-=-=-=-=-=-=-=-=-=
+=-=-=-=-=-=-=-=-=-=-=     
+|| 🎅 Advent of Code 🎁 ||     
+=-=-=-=-=-=-=-=-=-=-=   
 Repo for Advent of Code puzzles per year
 
 #### ☃️ 2025 Progress Tracker ☃️
