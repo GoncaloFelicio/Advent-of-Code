@@ -6,16 +6,19 @@ def solve_part1(data:list[str]) -> int:
     start = 50
     password = 0
 
-    for line in data:
+    # checks if the dial stops at 0
+    for line in data[:]:
         # print(f"Processing line: {line}")
         direction = line[0]
         value = int(line[1:])
+        # Calculate the new position (step)
         step = start + value if direction == 'R' else start - value
         # print(f"Start: {start}, Direction: {direction}, Value: {value}")
         # print(f"Step calculated: {step}")
-        if step == 0 or (step % 100) == 0:
+        # The dial stops at a multiple of 100 if step % 100 == 0.
+        # This handles 0, 100, -100, 200, etc.
+        if (step % 100) == 0:
             password += 1
-        
         # print(f"Updated password: {password}")
         start = step
 
@@ -23,7 +26,52 @@ def solve_part1(data:list[str]) -> int:
 
 
 def solve_part2(data:list[str]) -> int:
-    pass
+    start = 50
+    password = 0
+
+    
+    # checks if the dial stops at 0
+    for line in data[:]:
+        # print(f"Processing line: {line}")
+        step0 = False
+        start0 = False
+        direction = line[0]
+        value = int(line[1:])
+        step = start + value if direction == 'R' else start - value
+        # print(f"Start: {start}, Direction: {direction}, Value: {value}")
+        # print(f"Step calculated: {step}")
+        
+        # 1. Stopping at a multiple of 100 (including 0)
+        # Check if the final step is a multiple of 100
+        if (step % 100) == 0:
+            password += 1
+            step0 = True
+            # print(f"Updated password: {password}")
+        if (start % 100) == 0:
+            start0 = True
+
+        # checks if the dial crosses 0
+        start_hundreds_digit = start // 100
+        # print(f"Start hundreds digit: {start_hundreds_digit}")
+        step_hundreds_digit = step // 100
+        # print(f"Step hundreds digit: {step_hundreds_digit}")
+        crosses_zero = abs(start_hundreds_digit - step_hundreds_digit)
+        # print(f"Crosses zero count: {crosses_zero}")
+        
+        if start < step and step0:
+            crosses_zero -= 1  # already counted stopping at 0
+            # print(f"Crosses zero count adjusted: {crosses_zero}")
+        elif start > step and start0:
+            crosses_zero -= 1  # already counted stopping at 0
+            # print(f"Crosses zero count adjusted: {crosses_zero}")
+        
+        password += crosses_zero
+        # print(f"Updated password: {password}")
+
+        # update start for next iteration
+        start = step
+
+    return password
 
 
 if __name__ == "__main__":
