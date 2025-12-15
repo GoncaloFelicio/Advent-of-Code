@@ -1,6 +1,7 @@
 from .shared import read_input
 import time 
 
+
 def solve_part1(data:list[str]) -> int:
     
     def get_max(iterable: list[str]) -> tuple[int, str]:
@@ -19,9 +20,10 @@ def solve_part1(data:list[str]) -> int:
                 current_idx = idx
 
         return (current_idx, current_max)
-    
+
     result = 0
-    for line in data:
+
+    for line in data[:]:
         # get the first max value and its index
         max_idx, max_value = get_max(line)
         # print(f"Max value in line '{line}': {max_value}, at index '{max_idx}' -> {line[max_idx]}")
@@ -49,8 +51,29 @@ def solve_part1(data:list[str]) -> int:
     return result
 
 def solve_part2(data:list[str]) -> int:
-    pass
 
+    DIGITS = 12
+    result = 0
+
+    for line in data[:]:
+        skip_digits = len(line) - DIGITS
+        largest_number = []
+        for number in line:
+            # while function is the trick here as it will remove as many digits as needed to build the largest sequence
+            # Rather than picking digits until you have twelve we reverse and pop digits out until we have twelve left
+            # While there are digits to drop (K > 0) AND the result is not empty AND the current digit is greater than the last digit in our result
+            while skip_digits > 0 and largest_number and number > largest_number[-1]:
+                largest_number.pop()
+                skip_digits -= 1
+            largest_number.append(number)
+
+        # Finally, we slice the result to ensure it's exactly DIGITS long
+        final_number = int(''.join(largest_number[:DIGITS]))
+        # Sum up all largest numbers from each line
+        result += final_number
+    
+    return result
+            
 
 if __name__ == "__main__":
 
