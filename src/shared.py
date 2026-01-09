@@ -13,14 +13,14 @@ def read_input(day_number: int, filename: str = None) -> list[str]:
     try:
         print(f"Reading input from {filepath}")
         with open(filepath, "r") as f:
-            # Read all lines and strip whitespace
-            data = [line.strip() for line in f]
+            # Read all lines without stripping whitespaces
+            data = [line for line in f]
 
             if len(data) == 1 and ',' in data[0]:
                 print("Detected single-line, comma-separated format.")
                 content = data[0]
-                # Split the single line by comma and strip whitespace from each item
-                data = [item.strip() for item in content.split(',')]
+                # Split the single line by comma without stripping whitespace from each item
+                data = [item for item in content.split(',')]
             else:
                 print("Detected multi-line format.")
                 # If it's multi-line, or a single line without a comma, the base read is correct.
